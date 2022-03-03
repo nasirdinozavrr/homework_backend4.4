@@ -11,10 +11,8 @@ class DirectorSerializer(serializers.ModelSerializer):
         model = Director
         fields = 'id name count_movies'.split()
 
-
 class DirectorCreateUpdateSerializer(serializers.Serializer):
     name = serializers.CharField(min_length=6, max_length=10)
-
 
 
 

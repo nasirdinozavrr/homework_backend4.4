@@ -36,12 +36,6 @@ class DirectorCreateUpdateAPIView(ListCreateAPIView):
     pagination_class = PageNumberPagination
     filter_fields = ['name']
 
-    def post(self, request):
-        serializer = serializers.DirectorCreateUpdateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        director = models.Director.objects.create(**serializer.validated_data)
-        return Response(data=serializers.DirectorSerializer(director).data, status=status.HTTP_201_CREATED)
-
 
 # @api_view(["GET", "PUT", "DELETE"])
 # def director_detail_view(request, id):
@@ -178,16 +172,6 @@ class ReviewUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     lookup_field = 'id'
-
-
-    def post(self, request):
-        serializer = serializers.ReviewCreateUpdateSerailizer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        text = request.data.get("text")
-        movie_id = request.data.get("movie_id")
-        stars = request.data.get("stars")
-        review = models.Review.objects.create(text=text, movie_id=movie_id, stars=stars)
-        return Response(data=serializers.ReviewSerializer(review).data, status=status.HTTP_201_CREATED)
 
 
 # @api_view(['POST'])

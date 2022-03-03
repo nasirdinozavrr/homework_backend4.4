@@ -38,8 +38,6 @@ class MovieCreateUpdateSerializer(serializers.Serializer):
         return director_id
 
 
-
-
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review

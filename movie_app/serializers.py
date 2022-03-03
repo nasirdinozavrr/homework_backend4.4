@@ -1,15 +1,16 @@
 from rest_framework import serializers
 from movie_app.models import Director, Movie, Review
 from rest_framework.exceptions import ValidationError
-
-
-
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from rest_framework.authtoken.models import Token
 
 
 class DirectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Director
         fields = 'id name count_movies'.split()
+
 
 class DirectorCreateUpdateSerializer(serializers.Serializer):
     name = serializers.CharField(min_length=6, max_length=10)
@@ -23,6 +24,7 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = 'id title duration description director rating'.split()
+
 
 class MovieCreateUpdateSerializer(serializers.Serializer):
     title = serializers.CharField(min_length=2, max_length=50)
@@ -48,3 +50,16 @@ class ReviewCreateUpdateSerializer(serializers.Serializer):
     stars = serializers.IntegerField(min_value=1, max_value=5)
 
 
+class UserCreateSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+    def validate_username(self, username):
+        if User.objects.filter(username=username):
+            raise ValueError('User with this username already exist!')
+        return username
+
+
+class AuthorizationSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()

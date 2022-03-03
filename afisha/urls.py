@@ -1,15 +1,14 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from movie_app import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/v1/directors/', views.director_list_view),
-    path('api/v1/directors/<int:id>/', views.director_detail_view),
-    path('api/v1/movies/', views.movie_list_view),
-    path('api/v1/movies/<int:id>/', views.movie_detail_view),
-    path('api/v1/reviews/', views.review_list_view),
-    path('api/v1/reviews/<int:id>/', views.review_detail_view),
-    path('api/v1/login/', views.authorization),
-    path('api/v1/register/', views.registration)
-]
+    path('api/v1/directors/', views.DirectorCreateUpdateAPIView.as_view()),
+    path('api/v1/directors/<int:id>/', views.DirectorUpdateDeleteAPIView.as_view()),
+    path('api/v1/movies/', views.MovieCreateUpdateAPIView.as_view()),
+    path('api/v1/movies/<int:id>/', views.MovieUpdateDeleteAPIView.as_view()),
+    path('api/v1/reviews/', views.ReviewCreateUpdateAPIView.as_view()),
+    path('api/v1/reviews/<int:id>/', views.ReviewUpdateDeleteAPIView.as_view()),
+    path('api/v1/registration/', views.RegisterAPIView.as_view()),
+    path('api/v1/login/', views.AuthorizationAPIView.as_view()),
+    ]
